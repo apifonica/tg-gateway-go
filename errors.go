@@ -2,7 +2,6 @@ package tggateway
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 )
 
@@ -14,6 +13,7 @@ var (
 	ErrCodeMaxAttemptsExceeded = errors.New("CODE_MAX_ATTEMPTS_EXCEEDED")
 	ErrPhoneNumberInvalid      = errors.New("PHONE_NUMBER_INVALID")
 	ErrPhoneNumberNotFound     = errors.New("PHONE_NUMBER_NOT_FOUND")
+	ErrPhoneNumberNotAvailable = errors.New("PHONE_NUMBER_NOT_AVAILABLE")
 	ErrPhoneNumberMismatch     = errors.New("PHONE_NUMBER_MISMATCH")
 	ErrRequestIdInvalid        = errors.New("REQUEST_ID_INVALID")
 	ErrRequestIdRequired       = errors.New("REQUEST_ID_REQUIRED")
@@ -29,7 +29,6 @@ var (
 	ErrBalanceNotEnough        = errors.New("BALANCE_NOT_ENOUGH")
 	ErrFloodWait               = errors.New("FLOOD_WAIT")
 	ErrUnknownMethod           = errors.New("UNKNOWN_METHOD")
-	ErrUnknown                 = errors.New("UNKNOWN_ERROR")
 )
 
 var errorsMap = map[string]error{
@@ -40,6 +39,7 @@ var errorsMap = map[string]error{
 	"CODE_MAX_ATTEMPTS_EXCEEDED": ErrCodeMaxAttemptsExceeded,
 	"PHONE_NUMBER_INVALID":       ErrPhoneNumberInvalid,
 	"PHONE_NUMBER_NOT_FOUND":     ErrPhoneNumberNotFound,
+	"PHONE_NUMBER_NOT_AVAILABLE": ErrPhoneNumberNotAvailable,
 	"PHONE_NUMBER_MISMATCH":      ErrPhoneNumberMismatch,
 	"REQUEST_ID_INVALID":         ErrRequestIdInvalid,
 	"REQUEST_ID_REQUIRED":        ErrRequestIdRequired,
@@ -65,6 +65,6 @@ func (c Client) mapErr(errVal string) error {
 		return err
 	}
 
-	fmt.Printf("unknown error:%s\n", errVal)
-	return ErrUnknown
+	// Unknown error
+	return errors.New(errVal)
 }
